@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vedika Datta - Personal Portfolio Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-blue: #3b82f6;
+            --glow-blue: #60a5fa;
+            --text-white: #f1f5f9;
+            --text-gray: #94a3b8;
+            --bg-dark: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+       
+     /* Light Mode Variables */
+        body.light-mode {
+            --primary-blue: #1e40af;
+            --accent-blue: #2563eb;
+            --glow-blue: #3b82f6;
+            --text-white: #1e293b;
+            --text-gray: #64748b;
+            --bg-dark: #f8fafc;
+            --text-main: #1e293b;
+        }
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 1.2rem 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+        body.light-mode nav {
+        background: rgba(255,255,255,0.85);
+    }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav ul li a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-blue);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -6px;
+            left: 0;
+            background: var(--accent-blue);
+            transition: width 0.4s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+        .contact {
+    text-align: center;
+}
+
+.contact-links a {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.contact-links a:hover {
+    text-decoration: underline;
+}
+
+/* Light mode fix */
+body.light-mode .contact-links a {
+    color: #1e40af;
+}
+
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.6rem;
+            color: var(--accent-blue);
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            max-width: 520px;
+            color: var(--text-gray);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            background: var(--accent-blue);
+            color: white;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.4s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(59,130,246,0.5);
+        }
+
+        .hero-image {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            inset: -20%;
+            background: radial-gradient(circle at 30% 30%, var(--glow-blue) 0%, transparent 60%);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3.2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--text-gray);
+            margin-bottom: 1.8rem;
+            font-size: 1.1rem;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-item {
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 0.8rem 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--accent-blue);
+            width: 0;
+            border-radius: 6px;
+            transition: width 1.6s ease-out;
+        }
+
+        .projects-completed {
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(59,130,246,0.15);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .project-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .project-card .btn {
+            margin: 0.6rem 0.8rem 0 0;
+            font-size: 0.95rem;
+            padding: 0.8rem 1.6rem;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+        }
+
+        .contact-info {
+            margin: 3rem 0;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+
+        .contact-info a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin: 0 1.5rem;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(59,130,246,0.2);
+            color: var(--text-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero-content h1 { font-size: 3.8rem; }
+            .hero-image { margin-top: 3rem; }
+            .about-content { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            h2 { font-size: 2.6rem; }
+            nav ul { gap: 1.2rem; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Portfolio.</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hello, I’m Vedika Datta</h1>
+            <div class="subtitle">AI & ML Student | Full Stack Developer</div>
+            <p>Passionate about building intelligent systems and modern web applications. Always eager to learn, create, and solve real-world problems.</p>
+            <a href="#contact" class="btn">Hire Me</a>
+        </div>
+
+        <div class="hero-image">
+            <img src="https://i.ibb.co/bMHnr75L/unnamed-1.jpg" alt="Vedika Datta">style="width:280px; height:280px; border-radius:50%; object-fit:cover; border:3px solid var(--accent-blue);">
+            </div>
+        
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div>
+                <p>Pursuing B.Tech in Artificial Intelligence & Machine Learning at St. Thomas College of Engineering & Technology.</p>
+                <p>Strong foundation in full-stack development, data structures, algorithms, and modern web technologies.</p>
+                <p>Hands-on experience with multiple live projects and always interview-ready for exciting opportunities in AI/ML and software development.</p>
+                <br>
+                <a href="#" class="btn">Download CV</a>
+            </div>
+            <div style="text-align:center;">
+                <img src="data:image/png;base64,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" alt="Vedika Datta" style="width:280px; height:280px; border-radius:50%; object-fit:cover; border:3px solid var(--accent-blue);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <h3>HTML</h3>
+                <div class="progress-bar"><div class="progress" data-width="92%"></div></div>
+            </div>
+            <div class="skill-item">
+                <h3>CSS</h3>
+                <div class="progress-bar"><div class="progress" data-width="85%"></div></div>
+            </div>
+            <div class="skill-item">
+                <h3>JavaScript</h3>
+                <div class="progress-bar"><div class="progress" data-width="88%"></div></div>
+            </div>
+            <div class="skill-item">
+                <h3>Python</h3>
+                <div class="progress-bar"><div class="progress" data-width="90%"></div></div>
+            </div>
+        </div>
+        <div class="projects-completed">Projects Completed Till Now: 3</div>
+    </section>
+
+    <!-- Projects -->
+<section id="projects">
+    <h2>My Projects</h2>
+    <div class="projects-grid">
+        <div class="project-card">
+            <h3>Jackpot Rush</h3>
+            <p>Casino-style Python-game 🎰 Jackpot Rush – Python Casino Game
+
+Jackpot Rush is a simple yet engaging casino-style desktop game built using Python. It features three game modes — Seven, Guess, and Roulette — allowing players to place bets, test their luck, and track their balance in real time.
+
+The game uses Tkinter for an interactive GUI and Pygame for win/loss sound effects, showcasing core skills in GUI design, game logic, and event handling.
+
+Tech Stack: 🐍 Python | 🖼️ Tkinter | 🎮 Pygame | 🎲 Random</p>
+            <a class="btn" href="https://github.com/vedikdatta/CASINO-PYTHON-GAME" target="_blank">GitHub Repo </a>
+            <a class="btn" href="https://github.com/vedikdatta/CASINO-PYTHON-GAME/releases/download/v1.0/casino.exe" target="_blank">Live Demo</a>
+        </div>
+        <div class="project-card">
+            <h3>Calorie Analyzer</h3>
+            <p>Calorie Analyzer is an AI-powered web application that analyzes food images to estimate calories and macronutrients. By combining a clean, responsive frontend with AI vision models, it delivers item-wise calorie, protein, carb, and fat breakdowns along with total meal calories. This project showcases my skills in frontend development, API integration, and applied AI using 🧱 HTML, 🎨 CSS, ⚙️ JavaScript, 🤖 AI Vision Models, and 🌐 REST APIs, with a strong focus on usability and real-world problem solving.
+.</p>
+            <a class="btn" href="https://github.com/vedikdatta/calorieapp" target="_blank">GitHub Repo </a>
+            <a class="btn" href="https://effulgent-queijadas-49551b.netlify.app/" target="_blank">Live Demo</a>
+        </div>
+        <div class="project-card">
+            <h3>Techxy AI Chatbot</h3>
+            <p> 🤖 Techxy – AI Chatbot Interface
+
+Techxy is a modern AI-powered chatbot designed for seamless, real-time conversations with Google Gemini AI. It features a clean, animated chat interface with support for PDF uploads, enabling context-aware responses from documents. The project highlights my ability to build polished, scalable frontends and integrate advanced AI services into user-friendly applications.
+
+Built using ⚛️ React (Next.js), 🟦 TypeScript, 🎨 Tailwind CSS, and 🧩 shadcn/ui, Techxy delivers a smooth and responsive UI enhanced with 🎬 GSAP animations**. It integrates 🤖 Google Gemini AI API for intelligent responses and 📄 PDF.js for document text extraction, demonstrating strong skills in AI integration, UI/UX design, and modern web development.
+</p>
+             <a class="btn" href="https://github.com/vedikdatta/aichatbot" target="_blank">GitHub Repo </a>
+
+            
+            <a class="btn" href="https://aichatbot-phi-three.vercel.app/" target="_blank">Live Demo</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact">
+    <h2>Contact Me</h2>
+    <p class="contact-links">
+        <a href="mailto:vedikadatta1611@gmail.com">✉️ vedikadatta1611@gmail.com</a><br><br>
+        <a href="tel:+916290507435">📞 +91 62905 07435</a>
+        
+        <a href="https://github.com/vedikdatta" target="_blank" rel="noopener">
+    
+    🔗 My GitHub Profile
+</a>
+    <a href="https://www.linkedin.com/in/vedika-datta-431a98281?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"> 📌 My Linkedln Profile </a>
+
+    </p>
+</section>
+
+
+<footer>
+    <p>© 2025 Vedika Datta. Personal Portfolio Website</p>
+</footer>
+
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(".hero-content > *", {y:60, opacity:0, stagger:0.2, duration:1.2});
+    gsap.from(".hero-image", {scale:0.8, opacity:0, duration:1.4, delay:0.6});
+
+    document.querySelectorAll(".progress").forEach(bar => {
+        gsap.to(bar, {
+            scrollTrigger: { trigger: bar, start: "top 85%" },
+            width: bar.dataset.width,
+            duration: 1.8
+        });
+    });
+
+    function toggleTheme() {
+        document.body.classList.toggle("light-mode");
+        const themeToggle = document.querySelector(".theme-toggle");
+        themeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+        
+        // Update nav background for light mode
+        const nav = document.querySelector("nav");
+        if (document.body.classList.contains("light-mode")) {
+            nav.style.background = "rgba(248, 250, 252, 0.85)";
+        } else {
+            nav.style.background = "rgba(0,0,0,0.75)";
+        }
+    }
+
+    // Initialize theme from localStorage if available
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
+            document.body.classList.add("light-mode");
+            document.querySelector(".theme-toggle").textContent = "☀️";
+            document.querySelector("nav").style.background = "rgba(248, 250, 252, 0.85)";
+        }
+        
+        // Save theme preference when toggled
+        document.querySelector(".theme-toggle").addEventListener("click", function() {
+            const isLightMode = document.body.classList.contains("light-mode");
+            localStorage.setItem("theme", isLightMode ? "light" : "dark");
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
